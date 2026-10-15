@@ -1,0 +1,118 @@
+[gd_scene format=3 uid="uid://cb5nsettings01"]
+
+[ext_resource type="Script" path="res://scenes/ui/settings_menu.gd" id="1_settings"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.06, 0.08, 0.12, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.08, 0.82, 0.98, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 36.0
+content_margin_top = 24.0
+content_margin_right = 36.0
+content_margin_bottom = 24.0
+
+[node name="SettingsMenu" type="CenterContainer"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_settings")
+
+[node name="Panel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.82, 0.98, 1)
+theme_override_font_sizes/font_size = 22
+text = "SETTINGS"
+horizontal_alignment = 1
+
+[node name="MasterRow" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBox/MasterRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Master Volume:"
+
+[node name="MasterSlider" type="HSlider" parent="Panel/VBox/MasterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="SfxRow" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBox/SfxRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "SFX Volume:"
+
+[node name="SfxSlider" type="HSlider" parent="Panel/VBox/SfxRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="DisplayRow" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBox/DisplayRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Display Mode:"
+
+[node name="FullscreenCheck" type="CheckBox" parent="Panel/VBox/DisplayRow"]
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="ControlsPanel" type="PanelContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="ControlsVBox" type="VBoxContainer" parent="Panel/VBox/ControlsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ControlsTitle" type="Label" parent="Panel/VBox/ControlsPanel/ControlsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.75, 0.9, 1)
+theme_override_font_sizes/font_size = 13
+text = "CONTROLS REFERENCE:"
+
+[node name="ControlsDesc" type="Label" parent="Panel/VBox/ControlsPanel/ControlsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.95, 1)
+theme_override_font_sizes/font_size = 12
+text = "• Move Left / Right: [A] / [D] or Left / Right Arrows
+• Jump: [SPACE] or [W] (Coyote time & jump buffering enabled)
+• Reality Phase Shift: [Q] (Switches between Reality A and B)
+• Interact: [E] or Mouse Click (Rotate mirrors, toggle terminals)
+• Pause: [ESC]"
+
+[node name="Sep" type="Control" parent="Panel/VBox"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="BackBtn" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "BACK"

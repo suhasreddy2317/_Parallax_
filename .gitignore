@@ -1,0 +1,13 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Godot generated files
+.godot/
+.export/
+
+# Backup files
+*.bak
+*.backup
+*.backup_*
+dev.backup.js

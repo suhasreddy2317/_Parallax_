@@ -1,0 +1,187 @@
+[gd_scene format=3 uid="uid://cb5nmainmenu01"]
+
+[ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_mainmenu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
+bg_color = Color(0.06, 0.08, 0.12, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.08, 0.82, 0.98, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 36.0
+content_margin_top = 24.0
+content_margin_right = 36.0
+content_margin_bottom = 24.0
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mainmenu")
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainVBox" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+theme_override_constants/separation = 28
+alignment = 1
+
+[node name="TitleBox" type="VBoxContainer" parent="Center/MainVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Center/MainVBox/TitleBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 46
+text = "RESPAWN: PARALLAX"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Center/MainVBox/TitleBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.2, 0.75, 1)
+theme_override_font_sizes/font_size = 18
+text = "— FRACTURED REALITIES —"
+horizontal_alignment = 1
+
+[node name="Desc" type="Label" parent="Center/MainVBox/TitleBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.78, 0.9, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "A Cinematic 2D Science-Fiction Puzzle Platformer"
+horizontal_alignment = 1
+
+[node name="MenuButtons" type="VBoxContainer" parent="Center/MainVBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="SinglePlayerBtn" type="Button" parent="Center/MainVBox/MenuButtons"]
+layout_mode = 2
+text = "SINGLE PLAYER"
+
+[node name="LocalMultiplayerBtn" type="Button" parent="Center/MainVBox/MenuButtons"]
+layout_mode = 2
+text = "LOCAL MULTIPLAYER"
+
+[node name="StageSelectBtn" type="Button" parent="Center/MainVBox/MenuButtons"]
+layout_mode = 2
+text = "STAGE SELECT"
+
+[node name="SettingsBtn" type="Button" parent="Center/MainVBox/MenuButtons"]
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="CreditsBtn" type="Button" parent="Center/MainVBox/MenuButtons"]
+layout_mode = 2
+text = "CREDITS"
+
+[node name="QuitBtn" type="Button" parent="Center/MainVBox/MenuButtons"]
+layout_mode = 2
+text = "QUIT"
+
+[node name="StageSelectModal" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="StageSelectModal"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="VBox" type="VBoxContainer" parent="StageSelectModal/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="StageSelectModal/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "SELECT STAGE"
+horizontal_alignment = 1
+
+[node name="Stage1Btn" type="Button" parent="StageSelectModal/Panel/VBox"]
+layout_mode = 2
+text = "STAGE 01: FIRST CONTACT"
+
+[node name="Stage2Btn" type="Button" parent="StageSelectModal/Panel/VBox"]
+layout_mode = 2
+text = "STAGE 02: FRACTURE"
+
+[node name="Stage3Btn" type="Button" parent="StageSelectModal/Panel/VBox"]
+layout_mode = 2
+text = "STAGE 03: SINGULARITY"
+
+[node name="Sep" type="Control" parent="StageSelectModal/Panel/VBox"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="CloseStageBtn" type="Button" parent="StageSelectModal/Panel/VBox"]
+layout_mode = 2
+text = "BACK"
+
+[node name="CreditsModal" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CreditsModal"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="VBox" type="VBoxContainer" parent="CreditsModal/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="CreditsModal/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "CREDITS"
+horizontal_alignment = 1
+
+[node name="CreditsText" type="Label" parent="CreditsModal/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.98, 1)
+theme_override_font_sizes/font_size = 14
+text = "RESPAWN: PARALLAX — FRACTURED REALITIES
+
+Created with Godot 4.7
+• Concept: Cinematic Dual-Reality Sci-Fi Puzzle Platformer
+• Features: Parallax Layered Depth, Optical Reflection Mechanics,
+  Procedural Humanoid Rig, Dual-Spectrum Shader Palettes
+• Systems: Autonomous Drone AI, Dynamic Audio Synthesis
+
+Thank you for playing!"
+horizontal_alignment = 1
+
+[node name="CloseCreditsBtn" type="Button" parent="CreditsModal/Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "CLOSE"
+
+

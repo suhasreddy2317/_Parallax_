@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cb5nlasermirror01"]
+
+[ext_resource type="Script" path="res://scripts/laser_mirror.gd" id="1_mirror"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(58, 16)
+
+[node name="LaserMirror" type="StaticBody2D"]
+input_pickable = true
+script = ExtResource("1_mirror")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cb5nstage3_01"]
+
+[ext_resource type="Script" path="res://scenes/gameplay/stages/stage_3_singularity.gd" id="1_stage3"]
+
+[node name="Stage3Singularity" type="Node2D"]
+script = ExtResource("1_stage3")

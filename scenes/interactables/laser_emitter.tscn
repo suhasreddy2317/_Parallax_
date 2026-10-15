@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cb5nlaseremit01"]
+
+[ext_resource type="Script" path="res://scripts/laser_emitter.gd" id="1_emitter"]
+
+[node name="LaserEmitter" type="Node2D"]
+script = ExtResource("1_emitter")

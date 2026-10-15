@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cb5ndrone01"]
+
+[ext_resource type="Script" path="res://scripts/security_drone.gd" id="1_drone"]
+
+[node name="SecurityDrone" type="Node2D"]
+script = ExtResource("1_drone")

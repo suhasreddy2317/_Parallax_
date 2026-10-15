@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cb5ntestqa01"]
+
+[ext_resource type="Script" path="res://tests/test_verification.gd" id="1_testqa"]
+
+[node name="TestVerification" type="Node2D"]
+script = ExtResource("1_testqa")

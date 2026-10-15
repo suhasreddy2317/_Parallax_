@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cb5nstage1_01"]
+
+[ext_resource type="Script" path="res://scenes/gameplay/stages/stage_1_first_contact.gd" id="1_stage1"]
+
+[node name="Stage1FirstContact" type="Node2D"]
+script = ExtResource("1_stage1")

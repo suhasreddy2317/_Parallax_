@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://cb5nvictory01"]
+
+[ext_resource type="Script" path="res://scenes/ui/victory_screen.gd" id="1_victory"]
+
+[node name="VictoryScreen" type="Control"]
+visible = false
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("1_victory")
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Content" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="CoreSpacer" type="Control" parent="Center/Content"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Center/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 42
+text = "RESPawn"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Center/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.2, 0.75, 1)
+theme_override_font_sizes/font_size = 24
+text = "PARALLAX"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="Center/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.93, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "TWO REALITIES. ONE FUTURE."
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="Center/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 0.73, 0.87, 1)
+theme_override_font_sizes/font_size = 11
+text = "TIME 00:00     PHASE SHIFTS 0     HAZARDS 0"
+horizontal_alignment = 1
+
+[node name="Options" type="HBoxContainer" parent="Center/Content"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ReplayBtn" type="Button" parent="Center/Content/Options"]
+custom_minimum_size = Vector2(160, 42)
+layout_mode = 2
+focus_mode = 2
+text = "PLAY AGAIN"
+
+[node name="MenuBtn" type="Button" parent="Center/Content/Options"]
+custom_minimum_size = Vector2(160, 42)
+layout_mode = 2
+focus_mode = 2
+text = "MAIN MENU"
