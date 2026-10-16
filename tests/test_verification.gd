@@ -182,7 +182,18 @@ func _run_tests() -> void:
 	add_child(main_node)
 	var mm: MainMenu = main_node.get_node_or_null("TitleUILayer/MainMenu") as MainMenu
 	var smenu: SettingsMenu = main_node.get_node_or_null("TitleUILayer/SettingsMenu") as SettingsMenu
-	if mm != null and smenu != null:
+	var intro: OpeningIntro = main_node.get_node_or_null("TitleUILayer/OpeningIntro") as OpeningIntro
+	if mm != null and smenu != null and intro != null:
+		# The timed ending and explicit skip must both hand off to the same menu.
+		assert(not mm.visible)
+		intro._intro_tween.custom_step(10.1)
+		await get_tree().process_frame
+		assert(mm.visible and main_node.get("opening_intro") == null)
+		main_node.call("_show_opening_intro")
+		var skipped_intro: OpeningIntro = main_node.get_node_or_null("TitleUILayer/OpeningIntro") as OpeningIntro
+		assert(skipped_intro != null and not mm.visible)
+		skipped_intro._finish()
+		assert(mm.visible and main_node.get("opening_intro") == null)
 		# Verify campaign launch signal
 		main_node.call("_on_start_campaign")
 		assert(main_node.get("active_gameplay") != null)
@@ -190,7 +201,7 @@ func _run_tests() -> void:
 		main_node.call("_on_return_to_menu")
 		assert(main_node.get("active_gameplay") == null)
 		assert(mm.visible)
-		print("[PASS] TEST 9: Main project entry scene, Title Screen, Settings modal, and seamless scene switching verified.")
+		print("[PASS] TEST 9: Opening intro completes/skips to the existing menu, and title-screen scene switching remains seamless.")
 		passed_count += 1
 	else:
 		printerr("[FAIL] TEST 9: Main scene structure invalid.")

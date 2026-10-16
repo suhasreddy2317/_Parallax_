@@ -48,14 +48,14 @@ theme_override_constants/separation = 6
 layout_mode = 2
 theme_override_colors/font_color = Color(0.08, 0.85, 1, 1)
 theme_override_font_sizes/font_size = 46
-text = "RESPAWN: PARALLAX"
+text = "PARALLAX"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="Center/MainVBox/TitleBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.2, 0.75, 1)
 theme_override_font_sizes/font_size = 18
-text = "— FRACTURED REALITIES —"
+text = "FRACTURED REALITIES"
 horizontal_alignment = 1
 
 [node name="Desc" type="Label" parent="Center/MainVBox/TitleBox"]
@@ -168,7 +168,7 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.9, 0.98, 1)
 theme_override_font_sizes/font_size = 14
-text = "RESPAWN: PARALLAX — FRACTURED REALITIES
+text = "PARALLAX — FRACTURED REALITIES
 
 Created with Godot 4.7
 • Concept: Cinematic Dual-Reality Sci-Fi Puzzle Platformer

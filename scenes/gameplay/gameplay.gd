@@ -293,6 +293,8 @@ func _on_stage_completed(next_stage: int, player_id: int = 0, source_stage: Stag
 		is_campaign_won = true
 		is_game_paused = true
 		get_tree().paused = true
+		if hud:
+			hud.visible = false
 		if victory_screen:
 			victory_screen.set_stats(campaign_timer, reality_shifts_count, death_count)
 			victory_screen.play_ending_sequence()
@@ -353,6 +355,8 @@ func _restart_campaign() -> void:
 	campaign_timer = 0.0
 	reality_shifts_count = 0
 	death_count = 0
+	if hud:
+		hud.visible = true
 	if victory_screen:
 		victory_screen.reset_ending_sequence()
 	load_stage(1)

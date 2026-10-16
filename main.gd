@@ -5,6 +5,7 @@ extends Node2D
 ## Manages Title Screen (MainMenu), Settings, Stage Selection, and Gameplay transitions.
 
 const MAIN_MENU_SCENE: PackedScene = preload("res://scenes/ui/main_menu.tscn")
+const OPENING_INTRO_SCENE: PackedScene = preload("res://scenes/ui/opening_intro.tscn")
 const SETTINGS_SCENE: PackedScene = preload("res://scenes/ui/settings_menu.tscn")
 const GAMEPLAY_SCENE: PackedScene = preload("res://scenes/gameplay/gameplay.tscn")
 const BACKDROP_SCENE: PackedScene = preload("res://scenes/environment/parallax_backdrop.tscn")
@@ -13,6 +14,7 @@ var title_backdrop: ParallaxBackdrop = null
 var title_canvas: CanvasLayer = null
 var main_menu: MainMenu = null
 var settings_menu: SettingsMenu = null
+var opening_intro: OpeningIntro = null
 var active_gameplay: Gameplay = null
 var menu_camera: Camera2D = null
 
@@ -21,6 +23,7 @@ var _menu_pan_time: float = 0.0
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_setup_title_screen()
+	_show_opening_intro()
 
 func _process(delta: float) -> void:
 	# Subtle celestial pan during title menu
@@ -47,6 +50,7 @@ func _setup_title_screen() -> void:
 	add_child(title_canvas)
 
 	main_menu = MAIN_MENU_SCENE.instantiate() as MainMenu
+	main_menu.visible = false
 	main_menu.start_campaign_requested.connect(_on_start_campaign)
 	main_menu.local_multiplayer_requested.connect(_on_local_multiplayer)
 	main_menu.stage_selected.connect(_on_stage_selected)
@@ -57,6 +61,24 @@ func _setup_title_screen() -> void:
 	settings_menu.visible = false
 	settings_menu.closed.connect(_close_settings)
 	title_canvas.add_child(settings_menu)
+
+func _show_opening_intro() -> void:
+	if main_menu:
+		main_menu.visible = false
+	if settings_menu:
+		settings_menu.visible = false
+	opening_intro = OPENING_INTRO_SCENE.instantiate() as OpeningIntro
+	opening_intro.finished.connect(_show_main_menu)
+	title_canvas.add_child(opening_intro)
+
+func _show_main_menu() -> void:
+	if opening_intro and is_instance_valid(opening_intro):
+		opening_intro.queue_free()
+	opening_intro = null
+	if main_menu:
+		main_menu.visible = true
+	if settings_menu:
+		settings_menu.visible = false
 
 func _on_start_campaign() -> void:
 	_launch_gameplay(1)
@@ -87,9 +109,7 @@ func _on_return_to_menu() -> void:
 	menu_camera.enabled = true
 	title_backdrop.visible = true
 	title_canvas.visible = true
-	main_menu.visible = true
-	if settings_menu:
-		settings_menu.visible = false
+	_show_main_menu()
 
 func _open_settings() -> void:
 	if settings_menu:

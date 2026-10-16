@@ -48,7 +48,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.94, 0.98, 1)
 theme_override_font_sizes/font_size = 18
-text = "RESPAWN: PARALLAX"
+text = "PARALLAX"
 
 [node name="Spacer" type="Control" parent="Root/TopMargin/HBox"]
 layout_mode = 2
