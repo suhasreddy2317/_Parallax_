@@ -8,7 +8,7 @@ extends StageBase
 func _init() -> void:
 	stage_index = 2
 	stage_title = "STAGE 02: FRACTURE"
-	stage_objective = "• Objective: Phase out dimensional barrier [Q], rotate mirror [E] to reflect beam into overhead receiver."
+	stage_objective = "• Objective: Phase through the fracture, align both relay prisms [E], and unlock the transit path."
 	default_spawn_position = Vector2(100.0, 460.0)
 
 func _ready() -> void:
@@ -45,6 +45,25 @@ func configure_cooperative_reality(reality: int) -> void:
 		relay_step.active_reality = RealityManager.Reality.REALITY_B
 		add_child(relay_step)
 		relay_step.set_reality_override(reality)
+
+		# The solo climb is A -> B. This entry ledge keeps the isolated
+		# Reality-B co-op view traversable without bypassing either puzzle vault.
+		var phase_entry_b := ShiftableObject.new()
+		phase_entry_b.name = "BCoopVaultEntryS2"
+		phase_entry_b.position = Vector2(2280.0, 370.0)
+		phase_entry_b.object_size = Vector2(110.0, 22.0)
+		phase_entry_b.active_reality = RealityManager.Reality.REALITY_B
+		add_child(phase_entry_b)
+		phase_entry_b.set_reality_override(reality)
+	else:
+		# Matching support for Player 1's fixed Reality-A viewport.
+		var phase_middle_a := ShiftableObject.new()
+		phase_middle_a.name = "ACoopVaultMiddleS2"
+		phase_middle_a.position = Vector2(2440.0, 320.0)
+		phase_middle_a.object_size = Vector2(110.0, 22.0)
+		phase_middle_a.active_reality = RealityManager.Reality.REALITY_A
+		add_child(phase_middle_a)
+		phase_middle_a.set_reality_override(reality)
 
 func _build_level() -> void:
 	# 1. Starting platform and boundary
@@ -138,9 +157,9 @@ func _build_level() -> void:
 	crumble.position = Vector2(1680, 440)
 	add_child(crumble)
 
-	# Checkpoint 2 and Exit platform
+	# Checkpoint 2: the original exit platform is now a recovery point before
+	# a second, more demanding optical vault.
 	create_static_block(Vector2(1900, 440), Vector2(240, 36))
-	create_static_block(Vector2(2020, 220), Vector2(24, 450)) # Right boundary
 
 	var cp2: CheckpointTerminal = CheckpointTerminal.new()
 	cp2.name = "CheckpointS2_2"
@@ -148,9 +167,69 @@ func _build_level() -> void:
 	cp2.checkpoint_id = 2
 	add_child(cp2)
 
+	# 6. Fracture Vault: a phase climb followed by a separate mirror/receiver
+	# lock. It reuses the established optics rather than adding a new rule.
+	create_static_block(Vector2(2100, 460), Vector2(180, 34))
+
+	var vault_a := ShiftableObject.new()
+	vault_a.name = "VaultA1S2"
+	vault_a.position = Vector2(2280, 370)
+	vault_a.object_size = Vector2(110, 22)
+	vault_a.active_reality = RealityManager.Reality.REALITY_A
+	add_child(vault_a)
+
+	var vault_b := ShiftableObject.new()
+	vault_b.name = "VaultB1S2"
+	vault_b.position = Vector2(2440, 320)
+	vault_b.object_size = Vector2(110, 22)
+	vault_b.active_reality = RealityManager.Reality.REALITY_B
+	add_child(vault_b)
+
+	create_static_block(Vector2(2660, 390), Vector2(320, 34))
+	create_static_block(Vector2(2660, 70), Vector2(320, 24))
+	var cp3 := CheckpointTerminal.new()
+	cp3.name = "CheckpointS2_3"
+	cp3.position = Vector2(2560, 335)
+	cp3.checkpoint_id = 3
+	add_child(cp3)
+	_add_signpost(Vector2(2600, 310), "FRACTURE VAULT: phase up, then align the relay prism")
+
+	var vault_emitter := LaserEmitter.new()
+	vault_emitter.name = "VaultOpticalEmitterS2"
+	vault_emitter.position = Vector2(2580, 270)
+	vault_emitter.laser_direction = Vector2.RIGHT
+	vault_emitter.burn_player_on_touch = false
+	vault_emitter.beam_color = Color(0.55, 0.28, 1.0)
+	vault_emitter.max_range = 520.0
+	vault_emitter.mode = LaserEmitter.LaserMode.STATIC
+	add_child(vault_emitter)
+
+	var vault_mirror := LaserMirror.new()
+	vault_mirror.name = "VaultMirrorS2"
+	vault_mirror.position = Vector2(2780, 270)
+	vault_mirror.mirror_angle_degrees = 90.0
+	add_child(vault_mirror)
+
+	var vault_receiver := LaserReceiver.new()
+	vault_receiver.name = "VaultReceiverS2"
+	vault_receiver.position = Vector2(2780, 130)
+	vault_receiver.receiver_size = Vector2(52, 52)
+	add_child(vault_receiver)
+
+	var vault_door := PuzzleDoor.new()
+	vault_door.name = "VaultDoorS2"
+	vault_door.position = Vector2(2900, 300)
+	vault_door.door_size = Vector2(28, 230)
+	add_child(vault_door)
+	vault_receiver.powered_changed.connect(vault_door.set_powered)
+	_add_signpost(Vector2(2780, 350), "ROTATE THE PRISM [E] TO FEED THE EXIT RECEIVER")
+
+	create_static_block(Vector2(3060, 390), Vector2(320, 34))
+	create_static_block(Vector2(3220, 220), Vector2(24, 450)) # Right boundary
+
 	var exit: ExitPortal = ExitPortal.new()
 	exit.name = "ExitPortalS2"
-	exit.position = Vector2(1940, 370)
+	exit.position = Vector2(3100, 330)
 	exit.next_stage_id = 3
 	exit.portal_label = "STAGE 03"
 	add_child(exit)

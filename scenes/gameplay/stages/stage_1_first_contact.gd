@@ -7,7 +7,7 @@ extends StageBase
 func _init() -> void:
 	stage_index = 1
 	stage_title = "STAGE 01: FIRST CONTACT"
-	stage_objective = "• Objective: Phase shift [Q] across chasms, open security door with [E], reach transit gate."
+	stage_objective = "• Objective: Phase shift [Q] across chasms, anchor both relays with [E], and reach the transit gate."
 	default_spawn_position = Vector2(100.0, 480.0)
 
 func _ready() -> void:
@@ -38,6 +38,16 @@ func configure_cooperative_reality(reality: int) -> void:
 		final_step.active_reality = RealityManager.Reality.REALITY_A
 		add_child(final_step)
 		final_step.set_reality_override(reality)
+
+		# The solo route alternates A/B/A here. Give the fixed-Reality-A
+		# co-op viewport its own fair middle ledge without changing that lesson.
+		var relay_middle_a := ShiftableObject.new()
+		relay_middle_a.name = "ACoopRelayMiddleS1"
+		relay_middle_a.position = Vector2(2310.0, 320.0)
+		relay_middle_a.object_size = Vector2(110.0, 22.0)
+		relay_middle_a.active_reality = RealityManager.Reality.REALITY_A
+		add_child(relay_middle_a)
+		relay_middle_a.set_reality_override(reality)
 	else:
 		switch_s1.set_switch_enabled(false)
 		var relay_switch := PuzzleSwitch.new()
@@ -66,6 +76,23 @@ func configure_cooperative_reality(reality: int) -> void:
 		plat_b1.position = Vector2(580.0, 460.0)
 		var plat_b2 := get_node("Plat_B2") as ShiftableObject
 		plat_b2.position = Vector2(1640.0, 360.0)
+
+		# Reality B needs equivalent footing through the new relay ascent.
+		var relay_entry_b := ShiftableObject.new()
+		relay_entry_b.name = "BCoopRelayEntryS1"
+		relay_entry_b.position = Vector2(2160.0, 370.0)
+		relay_entry_b.object_size = Vector2(110.0, 22.0)
+		relay_entry_b.active_reality = RealityManager.Reality.REALITY_B
+		add_child(relay_entry_b)
+		relay_entry_b.set_reality_override(reality)
+
+		var relay_exit_b := ShiftableObject.new()
+		relay_exit_b.name = "BCoopRelayExitS1"
+		relay_exit_b.position = Vector2(2460.0, 370.0)
+		relay_exit_b.object_size = Vector2(110.0, 22.0)
+		relay_exit_b.active_reality = RealityManager.Reality.REALITY_B
+		add_child(relay_exit_b)
+		relay_exit_b.set_reality_override(reality)
 
 func _build_level() -> void:
 	# 1. Starting platform and boundary
@@ -136,13 +163,62 @@ func _build_level() -> void:
 	plat_b2.active_reality = RealityManager.Reality.REALITY_B
 	add_child(plat_b2)
 
-	# Exit Ledge & Transit Gate
+	# The original exit ledge is now a safe observation deck. The extended relay
+	# ascent reinforces the A/B route language before a final security seal.
 	create_static_block(Vector2(1860, 360), Vector2(220, 36))
-	create_static_block(Vector2(1980, 180), Vector2(24, 400)) # Right boundary
+	_add_signpost(Vector2(1870, 300), "RELAY ASCENT: alternate realities to reach the transit seal")
+
+	# 6. Phase Relay Ascent -- A -> B -> A in solo play.
+	create_static_block(Vector2(2040, 400), Vector2(100, 30))
+	var relay_a1 := ShiftableObject.new()
+	relay_a1.name = "RelayA1S1"
+	relay_a1.position = Vector2(2160, 370)
+	relay_a1.object_size = Vector2(110, 22)
+	relay_a1.active_reality = RealityManager.Reality.REALITY_A
+	add_child(relay_a1)
+
+	var relay_b1 := ShiftableObject.new()
+	relay_b1.name = "RelayB1S1"
+	relay_b1.position = Vector2(2310, 320)
+	relay_b1.object_size = Vector2(110, 22)
+	relay_b1.active_reality = RealityManager.Reality.REALITY_B
+	add_child(relay_b1)
+
+	var relay_a2 := ShiftableObject.new()
+	relay_a2.name = "RelayA2S1"
+	relay_a2.position = Vector2(2460, 370)
+	relay_a2.object_size = Vector2(110, 22)
+	relay_a2.active_reality = RealityManager.Reality.REALITY_A
+	add_child(relay_a2)
+
+	create_static_block(Vector2(2600, 390), Vector2(180, 34))
+	var cp2 := CheckpointTerminal.new()
+	cp2.name = "CheckpointS1_2"
+	cp2.position = Vector2(2580, 335)
+	cp2.checkpoint_id = 2
+	add_child(cp2)
+
+	var relay_switch := PuzzleSwitch.new()
+	relay_switch.name = "PhaseRelaySwitchS1"
+	relay_switch.position = Vector2(2660, 350)
+	relay_switch.is_toggle_type = true
+	add_child(relay_switch)
+	_add_signpost(Vector2(2640, 295), "ANCHOR THE RELAY [E] TO OPEN THE TRANSIT SEAL")
+
+	var relay_door := PuzzleDoor.new()
+	relay_door.name = "TransitSealS1"
+	relay_door.position = Vector2(2760, 300)
+	relay_door.door_size = Vector2(28, 230)
+	add_child(relay_door)
+	relay_switch.toggled.connect(relay_door.set_powered)
+
+	# Exit Ledge & Transit Gate
+	create_static_block(Vector2(2920, 390), Vector2(320, 34))
+	create_static_block(Vector2(3080, 180), Vector2(24, 400)) # Right boundary
 
 	var exit: ExitPortal = ExitPortal.new()
 	exit.name = "ExitPortalS1"
-	exit.position = Vector2(1880, 310)
+	exit.position = Vector2(2960, 330)
 	exit.next_stage_id = 2
 	exit.portal_label = "STAGE 02"
 	add_child(exit)
